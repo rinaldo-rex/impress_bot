@@ -29,13 +29,15 @@ def get_joke(category="stupid"):
             }
         else:
             return None
-    if joke_json.status_code == 200 or joke_json.get('error' == False):
+    if joke_json.status_code == 200:
+
+        if joke_json.json().get('error') == True:
+            joke = fetch_sample_joke()
+            return joke
         # Send a joke only if the request was successful.
-        print(joke_json.json())
         return joke_json.json()
     else:
         joke = fetch_sample_joke()
-        print(joke)
         if joke is not None:
             return joke
         return {
